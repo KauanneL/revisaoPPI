@@ -1,0 +1,125 @@
+<div class="container">
+
+    <h1>Clínica Médica</h1>
+  
+    <section class="formulario">
+  
+      <h2>Cadastrar Consulta</h2>
+  
+      <form [formGroup]="consultaForm" (ngSubmit)="cadastrarConsulta()">
+  
+        <div class="campo">
+          <label for="nomePaciente">
+            Nome do paciente
+          </label>
+  
+          <input
+            id="nomePaciente"
+            type="text"
+            formControlName="nomePaciente"
+            placeholder="Digite o nome do paciente"
+          >
+  
+          <span
+            class="erro"
+            *ngIf="consultaForm.get('nomePaciente')?.touched &&
+                   consultaForm.get('nomePaciente')?.invalid"
+          >
+            O nome do paciente é obrigatório.
+          </span>
+        </div>
+  
+  
+        <div class="campo">
+          <label for="preco">
+            Preço da consulta
+          </label>
+  
+          <input
+            id="preco"
+            type="number"
+            formControlName="preco"
+            min="0"
+            step="0.01"
+          >
+  
+          <span
+            class="erro"
+            *ngIf="consultaForm.get('preco')?.touched &&
+                   consultaForm.get('preco')?.invalid"
+          >
+            Informe um preço válido.
+          </span>
+        </div>
+  
+  
+        <div class="campo">
+          <label for="data">
+            Data da consulta
+          </label>
+  
+          <input
+            id="data"
+            type="date"
+            formControlName="data"
+          >
+  
+          <span
+            class="erro"
+            *ngIf="consultaForm.get('data')?.touched &&
+                   consultaForm.get('data')?.invalid"
+          >
+            A data da consulta é obrigatória.
+          </span>
+        </div>
+  
+  
+        <button type="submit">
+          Cadastrar consulta
+        </button>
+  
+      </form>
+  
+    </section>
+  
+  
+    <section class="consultas">
+  
+      <h2>Consultas cadastradas</h2>
+  
+      <p *ngIf="consultas.length === 0">
+        Nenhuma consulta cadastrada.
+      </p>
+  
+      <div
+        class="consulta"
+        *ngFor="let consulta of consultas"
+      >
+  
+        <h3>{{ consulta.nomePaciente }}</h3>
+  
+        <p>
+          <strong>Preço:</strong>
+          R$ {{ consulta.preco | number:'1.2-2' }}
+        </p>
+  
+        <p>
+          <strong>Data:</strong>
+          {{ consulta.data }}
+        </p>
+  
+      </div>
+  
+      <div
+        class="total"
+        *ngIf="consultas.length > 0"
+      >
+        <strong>
+          Valor total:
+          R$ {{ calcularTotal() | number:'1.2-2' }}
+        </strong>
+      </div>
+  
+    </section>
+  
+  </div>
